@@ -8,6 +8,32 @@
 
 #import "ZYXLine.h"
 
+#define BEGINPOINT @"beginPoint"
+#define ENDPOINT @"endPoint"
+
 @implementation ZYXLine
+
+- (instancetype)initWithCoder:(NSCoder *)aCoder
+{
+    self = [super init];
+    if (self)
+    {
+        self.begin = [aCoder decodeCGPointForKey:BEGINPOINT];
+        self.end = [aCoder decodeCGPointForKey:ENDPOINT];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeCGPoint:self.begin forKey:BEGINPOINT];
+    [aCoder encodeCGPoint:self.end forKey:ENDPOINT];
+}
+
+- (void)saveAllActiveLine
+{
+    [NSKeyedArchiver arch]
+}
 
 @end

@@ -25,7 +25,12 @@
     if (self)
     {
         self.lineInprogress = [[NSMutableDictionary alloc] init];
-        self.finishedLine = [[NSMutableArray alloc] init];
+        self.finishedLine = [NSKeyedUnarchiver unarchiveObjectWithFile:[self linesArchivePath]];
+        if (!self.finishedLine)
+        {
+             self.finishedLine = [[NSMutableArray alloc] init];
+        }
+       
         self.backgroundColor = [UIColor grayColor];
         self.multipleTouchEnabled = YES;
     }
@@ -62,6 +67,18 @@
     [path moveToPoint:line.begin];
     [path addLineToPoint:line.end];
     [path stroke];
+}
+
+- (NSString *)linesArchivePath
+{
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    NSString *path = [documentPath stringByAppendingPathComponent:@"lines.archive"];
+    return path;
+}
+
+- (void)archivedLine
+{
+    [NSKeyedArchiver archiveRootObject:self.finishedLine toFile:[self linesArchivePath]];
 }
 
 #pragma mark - Touches Action
@@ -103,6 +120,17 @@
         NSValue *key = [NSValue valueWithNonretainedObject:t];
         ZYXLine *line = self.lineInprogress[key];
         [self.finishedLine addObject:line];
+        [self.lineInprogress removeObjectForKey:key];
+    }
+    
+    [self setNeedsDisplay];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *t in touches)
+    {
+        NSValue *key = [NSValue valueWithNonretainedObject:t];
         [self.lineInprogress removeObjectForKey:key];
     }
     

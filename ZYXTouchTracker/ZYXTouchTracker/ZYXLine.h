@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface ZYXLine : NSObject
+@interface ZYXLine : NSObject<NSCoding>
 
 @property (nonatomic) CGPoint begin;
 @property (nonatomic) CGPoint end;
+
+- (void)saveAllActiveLine;
 
 @end
