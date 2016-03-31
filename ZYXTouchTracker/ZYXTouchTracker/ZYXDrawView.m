@@ -88,6 +88,29 @@
     [path stroke];
 }
 
+- (ZYXLine *)lineAtPoint:(CGPoint)p
+{
+    for (ZYXLine *l in self.finishedLines)
+    {
+        CGPoint start = l.begin;
+        CGPoint end = l.end;
+        
+        //检查线条的若干点进行比较
+        for (float t = 0.0; t < 1.0; t += 0.5)
+        {
+            float x = start.x + t * (end.x - start.x);
+            float y = start.y + t * (end.y - start.y);
+            //hypotf函数可以接受负数，所得结果还是正数
+            if (hypotf(x - p.x, y - p.y) < 20.0)
+            {
+                return l;
+            }
+        }
+    }
+    
+    return nil;
+}
+
 - (NSString *)linesArchivePath
 {
     NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
@@ -111,6 +134,11 @@
 - (void)tap:(UITapGestureRecognizer *)gr
 {
     NSLog(@"Recognized tap");
+    
+    CGPoint point = [gr locationInView:self];
+    self.selectedLine = [self lineAtPoint:point];
+    
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Touches Action
