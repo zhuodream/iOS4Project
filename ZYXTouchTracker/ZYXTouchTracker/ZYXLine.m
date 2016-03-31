@@ -31,9 +31,5 @@
     [aCoder encodeCGPoint:self.end forKey:ENDPOINT];
 }
 
-- (void)saveAllActiveLine
-{
-    [NSKeyedArchiver arch]
-}
 
 @end

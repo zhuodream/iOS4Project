@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSMutableDictionary *lineInprogress;
 @property (nonatomic, strong) NSMutableArray *finishedLines;
 
+@property (nonatomic, weak) ZYXLine *selectedLine;
+
 @end
 
 @implementation ZYXDrawView
@@ -36,6 +38,13 @@
         
         UITapGestureRecognizer *doubleTabRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
         doubleTabRecognizer.numberOfTapsRequired = 2;
+        doubleTabRecognizer.delaysTouchesBegan = YES;
+        
+        //防止手势冲突
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        tapRecognizer.delaysTouchesBegan = YES;
+        [tapRecognizer requireGestureRecognizerToFail:doubleTabRecognizer];
+        [self addGestureRecognizer:tapRecognizer];
         [self addGestureRecognizer:doubleTabRecognizer];
     }
     
@@ -59,6 +68,12 @@
         {
             [self strokeLine:self.lineInprogress[key]];
         }
+    }
+    
+    if (self.selectedLine)
+    {
+        [[UIColor greenColor] set];
+        [self strokeLine:self.selectedLine];
     }
 }
 
@@ -91,6 +106,11 @@
     [self.lineInprogress removeAllObjects];
     [self.finishedLines removeAllObjects];
     [self setNeedsDisplay];
+}
+
+- (void)tap:(UITapGestureRecognizer *)gr
+{
+    NSLog(@"Recognized tap");
 }
 
 #pragma mark - Touches Action
