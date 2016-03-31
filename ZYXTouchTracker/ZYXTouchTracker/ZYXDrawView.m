@@ -12,7 +12,7 @@
 @interface ZYXDrawView ()
 
 @property (nonatomic, strong) NSMutableDictionary *lineInprogress;
-@property (nonatomic, strong) NSMutableArray *finishedLine;
+@property (nonatomic, strong) NSMutableArray *finishedLines;
 
 @end
 
@@ -25,14 +25,18 @@
     if (self)
     {
         self.lineInprogress = [[NSMutableDictionary alloc] init];
-        self.finishedLine = [NSKeyedUnarchiver unarchiveObjectWithFile:[self linesArchivePath]];
-        if (!self.finishedLine)
+        self.finishedLines = [NSKeyedUnarchiver unarchiveObjectWithFile:[self linesArchivePath]];
+        if (!self.finishedLines)
         {
-             self.finishedLine = [[NSMutableArray alloc] init];
+             self.finishedLines = [[NSMutableArray alloc] init];
         }
        
         self.backgroundColor = [UIColor grayColor];
         self.multipleTouchEnabled = YES;
+        
+        UITapGestureRecognizer *doubleTabRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+        doubleTabRecognizer.numberOfTapsRequired = 2;
+        [self addGestureRecognizer:doubleTabRecognizer];
     }
     
     return self;
@@ -43,7 +47,7 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     [[UIColor blackColor] set];
-    for (ZYXLine *line in self.finishedLine)
+    for (ZYXLine *line in self.finishedLines)
     {
         [self strokeLine:line];
     }
@@ -78,7 +82,15 @@
 
 - (void)archivedLine
 {
-    [NSKeyedArchiver archiveRootObject:self.finishedLine toFile:[self linesArchivePath]];
+    [NSKeyedArchiver archiveRootObject:self.finishedLines toFile:[self linesArchivePath]];
+}
+
+#pragma mark - GestureRecognizer Method
+- (void)doubleTap:(UITapGestureRecognizer *)gr
+{
+    [self.lineInprogress removeAllObjects];
+    [self.finishedLines removeAllObjects];
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Touches Action
@@ -119,7 +131,7 @@
     {
         NSValue *key = [NSValue valueWithNonretainedObject:t];
         ZYXLine *line = self.lineInprogress[key];
-        [self.finishedLine addObject:line];
+        [self.finishedLines addObject:line];
         [self.lineInprogress removeObjectForKey:key];
     }
     
