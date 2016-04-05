@@ -502,6 +502,7 @@
 				277569B41C986B1700DE03CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		277569B51C986B1700DE03CE /* Build configuration list for PBXNativeTarget "ZYXTouchTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +511,7 @@
 				277569B71C986B1700DE03CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		277569B81C986B1700DE03CE /* Build configuration list for PBXNativeTarget "ZYXTouchTrackerUITests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +520,7 @@
 				277569BA1C986B1700DE03CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
