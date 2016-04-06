@@ -23,6 +23,17 @@
 
 @implementation ZYXDetailViewController
 
+//- (void)viewDidLayoutSubviews
+//{
+//    for (UIView *subview in self.view.subviews)
+//    {
+//        if ([subview hasAmbiguousLayout])
+//        {
+//            NSLog(@"AMBIGUOUS: %@", subview);
+//        }
+//    }
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -84,6 +95,14 @@
 - (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
+    
+//    for (UIView *subview in self.view.subviews)
+//    {
+//        if ([subview hasAmbiguousLayout])
+//        {
+//            [subview exerciseAmbiguityInLayout];
+//        }
+//    }
 }
 
 - (IBAction)takePicture:(id)sender
