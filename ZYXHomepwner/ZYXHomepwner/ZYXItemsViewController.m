@@ -116,7 +116,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ZYXItem *item = [[ZYXItemStore sharedStore] allItems][indexPath.row];
-    ZYXDetailViewController *detailViewController = [[ZYXDetailViewController alloc] init];
+    ZYXDetailViewController *detailViewController = [[ZYXDetailViewController alloc] initForNewItem:NO];
     detailViewController.item = item;
     
     [self.navigationController pushViewController:detailViewController animated:YES];
@@ -127,10 +127,14 @@
 - (void)addNewItem:(id)sender
 {
     ZYXItem *newItem = [[ZYXItemStore sharedStore] createItem];
-    NSInteger lastRow = [[[ZYXItemStore sharedStore] allItems] indexOfObject:newItem];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
-    
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    ZYXDetailViewController *detailViewController = [[ZYXDetailViewController alloc] initForNewItem:YES];
+    detailViewController.item = newItem;
+    detailViewController.dismissBlock = ^{
+        [self.tableView reloadData];
+    };
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 

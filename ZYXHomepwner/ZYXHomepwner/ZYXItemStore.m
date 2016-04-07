@@ -21,10 +21,10 @@
 + (instancetype)sharedStore
 {
     static ZYXItemStore *sharedStore = nil;
-    if (!sharedStore)
-    {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         sharedStore = [[self alloc] initPrivate];
-    }
+    });
     
     return sharedStore;
 }
@@ -40,9 +40,27 @@
     self = [super init];
     if (self)
     {
-        _privateItems = [[NSMutableArray alloc] init];
+        NSString *path = [self itemArchivePath];
+        _privateItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        if (!_privateItems)
+        {
+            _privateItems = [[NSMutableArray alloc] init];
+        }
     }
     return self;
+}
+
+- (NSString *)itemArchivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = documentDirectories.firstObject;
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
+}
+
+- (BOOL)saveChanges
+{
+    NSString *path = [self itemArchivePath];
+    return [NSKeyedArchiver archiveRootObject:self.privateItems toFile:path];
 }
 
 - (NSArray *)allItems
@@ -52,7 +70,8 @@
 
 - (ZYXItem *)createItem
 {
-    ZYXItem *item = [ZYXItem randomItem];
+   // ZYXItem *item = [ZYXItem randomItem];
+    ZYXItem *item = [[ZYXItem alloc] init];
     [self.privateItems addObject:item];
     
     return item;

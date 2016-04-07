@@ -9,15 +9,20 @@
 #import "ZYXDetailViewController.h"
 #import "ZYXItem.h"
 #import "ZYXImageStore.h"
+#import "ZYXTestViewController.h"
+#import "ZYXItemStore.h"
 
-@interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
+@interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *serialTextField;
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbar;
+@property (weak, nonatomic) UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButton;
+@property (nonatomic, strong) UIPopoverPresentationController *imagePopover;
+//@property (nonatomic, strong) UIPopoverController *imagePickerPopover;
 
 @end
 
@@ -34,12 +39,65 @@
 //    }
 //}
 
+- (instancetype)initForNewItem:(BOOL)isNew
+{
+    self = [super initWithNibName:nil bundle:nil];
+    
+    if (self)
+    {
+        if (isNew)
+        {
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(save:)];
+            self.navigationItem.rightBarButtonItem = doneItem;
+            
+            UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+            self.navigationItem.leftBarButtonItem = cancelItem;
+        }
+    }
+    
+    return self;
+}
+
+- (void)save:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:self.dismissBlock];
+}
+
+- (void)cancel:(id)sender
+{
+    [[ZYXItemStore sharedStore] removeItem:self.item];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:self.dismissBlock];
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    @throw [NSException exceptionWithName:@"Wrong initializer" reason:@"Use initForNewItem" userInfo:nil];
+    
+    return nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideCameraOverlayView:) name:@"_UIImagePickerControllerUserDidCaptureItem" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideCameraOverlayView:) name:@"_UIImagePickerControllerUserDidRejectItem" object:nil];
+    
+    UIImageView *iv = [[UIImageView alloc] initWithImage:nil];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    iv.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:iv];
+    self.imageView = iv;
+    
+    [self.imageView setContentHuggingPriority:200 forAxis:UILayoutConstraintAxisVertical];
+    [self.imageView setContentCompressionResistancePriority:700 forAxis:UILayoutConstraintAxisVertical];
+    NSDictionary *nameMap = @{ @"imageView" : self.imageView,
+                               @"dateLabel" : self.dateLabel,
+                               @"toolbar" : self.toolBar};
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[imageView]-0-|" options:0 metrics:nil views:nameMap];
+    NSArray *verticalContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[dateLabel]-8-[imageView]-8-[toolbar]" options:0 metrics:nil views:nameMap];
+    [self.view addConstraints:horizontalConstraints];
+    [self.view addConstraints:verticalContraints];
 }
 
 - (void)hideCameraOverlayView:(NSNotification *)notiifcation
@@ -73,6 +131,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    UIInterfaceOrientation io = [[UIApplication sharedApplication]  statusBarOrientation];
+    [self prepareViewsForOrientation:io];
     [self.view endEditing:YES];
     
     self.item.itemName = self.nameTextField.text;
@@ -92,6 +153,31 @@
     self.navigationItem.title = _item.itemName;
 }
 
+//iPhone界面转屏的时候调用，在iOS8被废弃
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self prepareViewsForOrientation:toInterfaceOrientation];
+}
+
+- (void)prepareViewsForOrientation:(UIInterfaceOrientation)orientiom
+{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        return;
+    }
+    if (UIInterfaceOrientationIsLandscape(orientiom))
+    {
+        self.imageView.hidden = YES;
+        self.cameraButton.enabled = NO;
+    }
+    else
+    {
+        self.imageView.hidden = NO;
+        self.cameraButton.enabled = YES;
+    }
+}
+
+#pragma mark - Action Method
 - (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
@@ -107,6 +193,13 @@
 
 - (IBAction)takePicture:(id)sender
 {
+    //如果使用UIPopoverController则需要在第二次点击按钮时关闭该controller
+//    if ([self.imagePickerPopover isPopoverVisible])
+//    {
+//        [self.imagePickerPopover dismissPopoverAnimated:YES];
+//        self.imagePickerPopover = nil;
+//        return;
+//    }
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -122,8 +215,42 @@
     }
     
     imagePicker.delegate = self;
-    
+    imagePicker.modalPresentationStyle = UIModalPresentationPopover;
+    self.imagePopover = imagePicker.popoverPresentationController;
+    self.imagePopover.barButtonItem = sender;
+    self.imagePopover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    self.imagePopover.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
+    
+//    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+//    {
+//        //在iOS8.0中被废弃
+//        self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+//        self.imagePickerPopover.delegate = self;
+//        [self.imagePickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+//    }
+//    else
+//    {
+//        [self presentViewController:imagePicker animated:YES completion:nil];
+//    }
+}
+
+//UIPopoverController的关闭操作
+//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+//{
+//    self.imagePickerPopover = nil;
+//}
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController
+{
+    //释放对象
+    self.imagePopover = nil;
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
+{
+    NSLog(@"iPhone");
+    return UIModalPresentationNone;
 }
 
 #pragma mark - UIImagePickerDelegate
@@ -135,7 +262,14 @@
     
     self.imageView.image = image;
     
+//UIPopoverController的手动关闭操作
+//    if (self.imagePickerPopover)
+//    {
+//        [self.imagePickerPopover dismissPopoverAnimated:YES];
+//        self.imagePickerPopover = nil;
+//    }
     [self dismissViewControllerAnimated:YES completion:nil];
+    self.imagePopover = nil;
 }
 
 #pragma mark - UITextFieldDelegate

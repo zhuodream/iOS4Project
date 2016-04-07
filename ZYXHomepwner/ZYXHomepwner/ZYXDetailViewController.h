@@ -13,5 +13,7 @@
 @interface ZYXDetailViewController : UIViewController
 
 @property (nonatomic, strong) ZYXItem *item;
+@property (nonatomic, copy) void (^dismissBlock)(void);
 
+- (instancetype)initForNewItem:(BOOL)isNew;
 @end

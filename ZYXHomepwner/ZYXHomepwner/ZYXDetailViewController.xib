@@ -7,10 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZYXDetailViewController">
             <connections>
+                <outlet property="cameraButton" destination="36c-A3-cpw" id="jZa-QN-0ZK"/>
                 <outlet property="dateLabel" destination="t9X-om-Amz" id="kNd-vu-uNb"/>
                 <outlet property="nameTextField" destination="FdM-iW-yCo" id="Ypd-RC-Vs6"/>
                 <outlet property="serialTextField" destination="j5D-IC-TOe" id="kXc-7t-eLW"/>
-                <outlet property="toolbar" destination="36c-A3-cpw" id="bu4-7O-DsY"/>
+                <outlet property="toolBar" destination="u2Z-Pa-hv8" id="GXl-AJ-FxU"/>
                 <outlet property="valueTextField" destination="2Pc-Jt-WcX" id="HOP-zc-tQF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -91,22 +92,22 @@
                 <constraint firstAttribute="trailing" secondItem="2Pc-Jt-WcX" secondAttribute="trailing" constant="20" id="3Td-MU-08U"/>
                 <constraint firstItem="ZJ4-U0-ycL" firstAttribute="top" secondItem="Tje-Kh-5jy" secondAttribute="bottom" constant="58" id="4c9-un-ol1"/>
                 <constraint firstItem="u2Z-Pa-hv8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6Yd-IQ-Mu7"/>
-                <constraint firstItem="j5D-IC-TOe" firstAttribute="baseline" secondItem="Tje-Kh-5jy" secondAttribute="baseline" id="Cnv-li-CEP"/>
                 <constraint firstItem="j5D-IC-TOe" firstAttribute="leading" secondItem="Tje-Kh-5jy" secondAttribute="trailing" id="DtG-iC-JXi"/>
                 <constraint firstItem="Tje-Kh-5jy" firstAttribute="top" secondItem="vDX-hb-ok3" secondAttribute="bottom" constant="58" id="F65-eG-ZvX"/>
-                <constraint firstItem="FdM-iW-yCo" firstAttribute="baseline" secondItem="vDX-hb-ok3" secondAttribute="baseline" id="LKd-eI-r7C"/>
+                <constraint firstItem="FdM-iW-yCo" firstAttribute="baseline" secondItem="vDX-hb-ok3" secondAttribute="baseline" id="HaM-Nn-FGV"/>
                 <constraint firstAttribute="trailing" secondItem="FdM-iW-yCo" secondAttribute="trailing" constant="20" id="Mbp-3T-m0r"/>
                 <constraint firstAttribute="trailing" secondItem="t9X-om-Amz" secondAttribute="trailing" constant="40" id="Moz-Zy-LfQ"/>
                 <constraint firstItem="ZJ4-U0-ycL" firstAttribute="leading" secondItem="Tje-Kh-5jy" secondAttribute="leading" id="VUl-kO-eEz"/>
                 <constraint firstItem="t9X-om-Amz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="crq-Bh-kbQ"/>
                 <constraint firstItem="vDX-hb-ok3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="iA0-cA-6c6"/>
+                <constraint firstItem="j5D-IC-TOe" firstAttribute="baseline" secondItem="Tje-Kh-5jy" secondAttribute="baseline" id="icN-rn-QjO"/>
                 <constraint firstItem="Tje-Kh-5jy" firstAttribute="leading" secondItem="vDX-hb-ok3" secondAttribute="leading" id="iij-xT-kai"/>
-                <constraint firstItem="ZJ4-U0-ycL" firstAttribute="baseline" secondItem="2Pc-Jt-WcX" secondAttribute="baseline" id="k6C-2N-JvW"/>
                 <constraint firstItem="t9X-om-Amz" firstAttribute="top" secondItem="2Pc-Jt-WcX" secondAttribute="bottom" constant="20" id="mZ6-mh-J4T"/>
                 <constraint firstItem="vDX-hb-ok3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="85" id="mbm-jo-zc2"/>
                 <constraint firstItem="FdM-iW-yCo" firstAttribute="leading" secondItem="vDX-hb-ok3" secondAttribute="trailing" id="npP-af-mfj"/>
                 <constraint firstAttribute="trailing" secondItem="u2Z-Pa-hv8" secondAttribute="trailing" id="pmS-1d-UZR"/>
                 <constraint firstItem="2Pc-Jt-WcX" firstAttribute="leading" secondItem="ZJ4-U0-ycL" secondAttribute="trailing" id="rd4-Ag-43Q"/>
+                <constraint firstItem="2Pc-Jt-WcX" firstAttribute="baseline" secondItem="ZJ4-U0-ycL" secondAttribute="baseline" id="ryH-Om-KOX"/>
                 <constraint firstAttribute="trailing" secondItem="j5D-IC-TOe" secondAttribute="trailing" constant="20" id="srN-Zn-0vG"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

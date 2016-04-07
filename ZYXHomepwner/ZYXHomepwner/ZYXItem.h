@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZYXItem : NSObject
+@interface ZYXItem : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *itemName;
 @property (nonatomic, copy) NSString *serialNumber;
