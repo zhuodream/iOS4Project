@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButton;
 @property (nonatomic, strong) UIPopoverPresentationController *imagePopover;
 //@property (nonatomic, strong) UIPopoverController *imagePickerPopover;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 
 @end
 
@@ -52,9 +55,16 @@
             UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
             self.navigationItem.leftBarButtonItem = cancelItem;
         }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFonts) name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)save:(id)sender
@@ -125,6 +135,8 @@
     
     UIImage *imageToDisplay = [[ZYXImageStore sharedStore] imageForKey:itemKey];
     self.imageView.image = imageToDisplay;
+    
+    [self updateFonts];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -277,6 +289,21 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - font setting
+- (void)updateFonts
+{
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    self.nameLabel.font = font;
+    self.serialNumberLabel.font = font;
+    self.valueLabel.font = font;
+    self.dateLabel.font = font;
+    
+    self.nameTextField.font = font;
+    self.serialTextField.font = font;
+    self.valueTextField.font = font;
 }
 
 @end

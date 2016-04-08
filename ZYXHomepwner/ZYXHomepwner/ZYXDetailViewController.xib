@@ -9,9 +9,12 @@
             <connections>
                 <outlet property="cameraButton" destination="36c-A3-cpw" id="jZa-QN-0ZK"/>
                 <outlet property="dateLabel" destination="t9X-om-Amz" id="kNd-vu-uNb"/>
+                <outlet property="nameLabel" destination="vDX-hb-ok3" id="8h8-e4-YaA"/>
                 <outlet property="nameTextField" destination="FdM-iW-yCo" id="Ypd-RC-Vs6"/>
+                <outlet property="serialNumberLabel" destination="Tje-Kh-5jy" id="AF3-wP-npu"/>
                 <outlet property="serialTextField" destination="j5D-IC-TOe" id="kXc-7t-eLW"/>
                 <outlet property="toolBar" destination="u2Z-Pa-hv8" id="GXl-AJ-FxU"/>
+                <outlet property="valueLabel" destination="ZJ4-U0-ycL" id="EDo-Lc-gHM"/>
                 <outlet property="valueTextField" destination="2Pc-Jt-WcX" id="HOP-zc-tQF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

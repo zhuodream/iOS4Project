@@ -96,7 +96,6 @@
             ZYXImageViewController *ivc = [[ZYXImageViewController alloc] init];
             
             ivc.image = img;
-            NSLog(@"first");
             self.imagePopover = [[UIPopoverController alloc] initWithContentViewController:ivc];
             self.imagePopover.delegate = self;
             self.imagePopover.popoverContentSize = CGSizeMake(600, 600);
