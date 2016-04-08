@@ -10,9 +10,13 @@
 #import "ZYXDetailViewController.h"
 #import "ZYXItemStore.h"
 #import "ZYXItem.h"
+#import "ZYXItemCell.h"
+#import "ZYXImageStore.h"
+#import "ZYXImageViewController.h"
 
-@interface ZYXItemsViewController ()
+@interface ZYXItemsViewController () <UIPopoverControllerDelegate>
 
+@property (nonatomic, strong) UIPopoverController *imagePopover;
 
 @end
 
@@ -48,7 +52,7 @@
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ZYXItemCell" bundle:nil] forCellReuseIdentifier:@"ZYXItemCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -65,11 +69,40 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    ZYXItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZYXItemCell" forIndexPath:indexPath];
+    NSArray *items = [ZYXItemStore sharedStore].allItems;
+    ZYXItem *item = items[indexPath.row];
     
-    ZYXItem *item = (ZYXItem *)[[ZYXItemStore sharedStore] allItems][indexPath.row];
-    NSLog(@"item ======= %@", item);
-    cell.textLabel.text = [item description];
+    cell.nameLabel.text = item.itemName;
+    cell.serialNumberLabel.text = item.serialNumber;
+    cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
+    cell.thumbnailView.image = item.thumbnail;
+    
+    __weak typeof(cell) weakcell = cell;
+    cell.actionBlock = ^{
+        NSLog(@"Going to show image for %@", item);
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
+            NSString *itemKey = item.itemKey;
+            ZYXItemCell *strongCell = weakcell;
+            UIImage *img = [[ZYXImageStore sharedStore] imageForKey:itemKey];
+            if (!img)
+            {
+                return ;
+            }
+            
+            CGRect rect = [self.view convertRect:strongCell.thumbnailView.bounds fromView:strongCell.thumbnailView];
+            
+            ZYXImageViewController *ivc = [[ZYXImageViewController alloc] init];
+            
+            ivc.image = img;
+            NSLog(@"first");
+            self.imagePopover = [[UIPopoverController alloc] initWithContentViewController:ivc];
+            self.imagePopover.delegate = self;
+            self.imagePopover.popoverContentSize = CGSizeMake(600, 600);
+            [self.imagePopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
+    };
     
     return cell;
 }
@@ -137,6 +170,10 @@
     [self presentViewController:navController animated:YES completion:nil];
 }
 
-
+#pragma make - UIPopoverControllerDelegate
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.imagePopover = nil;
+}
 
 @end

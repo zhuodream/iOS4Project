@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2708EA9B1CB683F9005C5EE2 /* ZYXItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2708EA9A1CB683F9005C5EE2 /* ZYXItemCell.m */; };
+		2708EA9D1CB6842B005C5EE2 /* ZYXItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */; };
+		273BCE6A1CB7505400653589 /* ZYXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BCE691CB7505400653589 /* ZYXImageViewController.m */; };
 		2775697B1C98101900DE03CE /* ZYXImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775697A1C98101900DE03CE /* ZYXImageStore.m */; };
 		27793E7D1C95C71000AD05AE /* ZYXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27793E7B1C95C71000AD05AE /* ZYXDetailViewController.m */; };
 		27793E7E1C95C71000AD05AE /* ZYXDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27793E7C1C95C71000AD05AE /* ZYXDetailViewController.xib */; };
@@ -39,6 +42,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2708EA991CB683F9005C5EE2 /* ZYXItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXItemCell.h; sourceTree = "<group>"; };
+		2708EA9A1CB683F9005C5EE2 /* ZYXItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXItemCell.m; sourceTree = "<group>"; };
+		2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZYXItemCell.xib; sourceTree = "<group>"; };
+		273BCE681CB7505400653589 /* ZYXImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXImageViewController.h; sourceTree = "<group>"; };
+		273BCE691CB7505400653589 /* ZYXImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXImageViewController.m; sourceTree = "<group>"; };
 		277569791C98101900DE03CE /* ZYXImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXImageStore.h; sourceTree = "<group>"; };
 		2775697A1C98101900DE03CE /* ZYXImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXImageStore.m; sourceTree = "<group>"; };
 		27793E7A1C95C71000AD05AE /* ZYXDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXDetailViewController.h; sourceTree = "<group>"; };
@@ -130,6 +138,11 @@
 				27793E7C1C95C71000AD05AE /* ZYXDetailViewController.xib */,
 				277569791C98101900DE03CE /* ZYXImageStore.h */,
 				2775697A1C98101900DE03CE /* ZYXImageStore.m */,
+				2708EA991CB683F9005C5EE2 /* ZYXItemCell.h */,
+				2708EA9A1CB683F9005C5EE2 /* ZYXItemCell.m */,
+				2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */,
+				273BCE681CB7505400653589 /* ZYXImageViewController.h */,
+				273BCE691CB7505400653589 /* ZYXImageViewController.m */,
 			);
 			path = ZYXHomepwner;
 			sourceTree = "<group>";
@@ -265,6 +278,7 @@
 			files = (
 				27793E7E1C95C71000AD05AE /* ZYXDetailViewController.xib in Resources */,
 				27B9035B1C84ABE10023B098 /* LaunchScreen.storyboard in Resources */,
+				2708EA9D1CB6842B005C5EE2 /* ZYXItemCell.xib in Resources */,
 				27B903581C84ABE10023B098 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,8 +304,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273BCE6A1CB7505400653589 /* ZYXImageViewController.m in Sources */,
 				27B903501C84ABE10023B098 /* AppDelegate.m in Sources */,
 				27B9034D1C84ABE10023B098 /* main.m in Sources */,
+				2708EA9B1CB683F9005C5EE2 /* ZYXItemCell.m in Sources */,
 				27B903831C84AFD40023B098 /* ZYXItem.m in Sources */,
 				27B903801C84AC5A0023B098 /* ZYXItemsViewController.m in Sources */,
 				2775697B1C98101900DE03CE /* ZYXImageStore.m in Sources */,

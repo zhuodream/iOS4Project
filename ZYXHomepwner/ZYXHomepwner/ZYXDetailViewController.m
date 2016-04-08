@@ -9,7 +9,6 @@
 #import "ZYXDetailViewController.h"
 #import "ZYXItem.h"
 #import "ZYXImageStore.h"
-#import "ZYXTestViewController.h"
 #import "ZYXItemStore.h"
 
 @interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate>
@@ -258,6 +257,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    [self.item setThumbnailFromImage:image];
     [[ZYXImageStore sharedStore] setImage:image forKey:self.item.itemKey];
     
     self.imageView.image = image;
