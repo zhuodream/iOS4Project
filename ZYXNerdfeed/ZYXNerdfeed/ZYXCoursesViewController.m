@@ -9,7 +9,7 @@
 #import "ZYXCoursesViewController.h"
 #import "ZYXWebViewController.h"
 
-@interface ZYXCoursesViewController ()
+@interface ZYXCoursesViewController () <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, copy) NSArray *courses;
@@ -26,7 +26,7 @@
         self.navigationItem.title = @"BNR Courses";
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        _session = [NSURLSession sessionWithConfiguration:config delegate:nil delegateQueue:nil];
+        _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
         [self fetchFeed];
     }
     
@@ -46,7 +46,7 @@
 
 - (void)fetchFeed
 {
-    NSString *requestString = @"http://bookapi.bignerdranch.com/courses.json";
+    NSString *requestString = @"https://bookapi.bignerdranch.com/private/courses.json";
     NSURL *url = [NSURL URLWithString:requestString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     
@@ -81,7 +81,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     NSDictionary *course = self.courses[indexPath.row];
     cell.textLabel.text = course[@"title"];
-
     return cell;
 }
 
@@ -93,7 +92,20 @@
     
     self.webViewController.title = courses[@"title"];
     self.webViewController.url = url;
-    [self.navigationController pushViewController:self.webViewController animated:YES];
+    
+    if (!self.splitViewController)
+    {
+        [self.navigationController pushViewController:self.webViewController animated:YES];
+    }
+}
+
+
+#pragma mark - NSURLSessionDataDelegate
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
+{
+    NSURLCredential *cred = [NSURLCredential credentialWithUser:@"BigNerdRanch" password:@"AchieveNerdvana" persistence:NSURLCredentialPersistenceForSession];
+    
+    completionHandler(NSURLSessionAuthChallengeUseCredential, cred);
 }
 
 @end

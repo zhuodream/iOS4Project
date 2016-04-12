@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZYXWebViewController : UIViewController
+@interface ZYXWebViewController : UIViewController <UISplitViewControllerDelegate>
 
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) NSString *title;

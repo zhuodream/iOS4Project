@@ -431,6 +431,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuo.ZYXNerdfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -442,6 +443,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhuo.ZYXNerdfeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -510,6 +512,7 @@
 				279F04301CBBF82D0082F442 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		279F04311CBBF82D0082F442 /* Build configuration list for PBXNativeTarget "ZYXNerdfeedTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +521,7 @@
 				279F04331CBBF82D0082F442 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		279F04341CBBF82D0082F442 /* Build configuration list for PBXNativeTarget "ZYXNerdfeedUITests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +530,7 @@
 				279F04361CBBF82D0082F442 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

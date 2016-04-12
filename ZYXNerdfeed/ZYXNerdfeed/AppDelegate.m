@@ -24,8 +24,22 @@
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cvc];
     ZYXWebViewController *wvc = [[ZYXWebViewController alloc] init];
     cvc.webViewController = wvc;
-    self.window.rootViewController = nav;
     
+    self.window.rootViewController = nav;
+    UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:wvc];
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        UISplitViewController *svc = [[UISplitViewController alloc] init];
+        svc.delegate = wvc;
+        
+        svc.viewControllers = @[nav, detailNav];
+        self.window.rootViewController = svc;
+    }
+    else
+    {
+        self.window.rootViewController = nav;
+    }
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
