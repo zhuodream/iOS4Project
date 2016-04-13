@@ -10,6 +10,11 @@
 		2708EA9B1CB683F9005C5EE2 /* ZYXItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2708EA9A1CB683F9005C5EE2 /* ZYXItemCell.m */; };
 		2708EA9D1CB6842B005C5EE2 /* ZYXItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */; };
 		273BCE6A1CB7505400653589 /* ZYXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BCE691CB7505400653589 /* ZYXImageViewController.m */; };
+		273EC51E1CBDF47D00B7B2FF /* Homepwner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 273EC51C1CBDF47D00B7B2FF /* Homepwner.xcdatamodeld */; };
+		273EC5211CBDF58100B7B2FF /* ZYXImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 273EC5201CBDF58100B7B2FF /* ZYXImageTransformer.m */; };
+		273EC5261CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 273EC5231CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.m */; };
+		273EC5271CBDF8C000B7B2FF /* ZYXItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 273EC5251CBDF8C000B7B2FF /* ZYXItem.m */; };
+		273EC52A1CBE36BA00B7B2FF /* ZYXAssetTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273EC5291CBE36BA00B7B2FF /* ZYXAssetTypeViewController.m */; };
 		2775697B1C98101900DE03CE /* ZYXImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775697A1C98101900DE03CE /* ZYXImageStore.m */; };
 		27793E7D1C95C71000AD05AE /* ZYXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27793E7B1C95C71000AD05AE /* ZYXDetailViewController.m */; };
 		27793E7E1C95C71000AD05AE /* ZYXDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27793E7C1C95C71000AD05AE /* ZYXDetailViewController.xib */; };
@@ -20,7 +25,6 @@
 		27B903661C84ABE10023B098 /* ZYXHomepwnerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B903651C84ABE10023B098 /* ZYXHomepwnerTests.m */; };
 		27B903711C84ABE10023B098 /* ZYXHomepwnerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B903701C84ABE10023B098 /* ZYXHomepwnerUITests.m */; };
 		27B903801C84AC5A0023B098 /* ZYXItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B9037F1C84AC5A0023B098 /* ZYXItemsViewController.m */; };
-		27B903831C84AFD40023B098 /* ZYXItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B903821C84AFD40023B098 /* ZYXItem.m */; };
 		27B903861C84B2A30023B098 /* ZYXItemStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B903851C84B2A30023B098 /* ZYXItemStore.m */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +51,15 @@
 		2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZYXItemCell.xib; sourceTree = "<group>"; };
 		273BCE681CB7505400653589 /* ZYXImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXImageViewController.h; sourceTree = "<group>"; };
 		273BCE691CB7505400653589 /* ZYXImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXImageViewController.m; sourceTree = "<group>"; };
+		273EC51D1CBDF47D00B7B2FF /* Homepwner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Homepwner.xcdatamodel; sourceTree = "<group>"; };
+		273EC51F1CBDF58100B7B2FF /* ZYXImageTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXImageTransformer.h; sourceTree = "<group>"; };
+		273EC5201CBDF58100B7B2FF /* ZYXImageTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXImageTransformer.m; sourceTree = "<group>"; };
+		273EC5221CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZYXItem+CoreDataProperties.h"; sourceTree = "<group>"; };
+		273EC5231CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZYXItem+CoreDataProperties.m"; sourceTree = "<group>"; };
+		273EC5241CBDF8C000B7B2FF /* ZYXItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXItem.h; sourceTree = "<group>"; };
+		273EC5251CBDF8C000B7B2FF /* ZYXItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXItem.m; sourceTree = "<group>"; };
+		273EC5281CBE36BA00B7B2FF /* ZYXAssetTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXAssetTypeViewController.h; sourceTree = "<group>"; };
+		273EC5291CBE36BA00B7B2FF /* ZYXAssetTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXAssetTypeViewController.m; sourceTree = "<group>"; };
 		277569791C98101900DE03CE /* ZYXImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXImageStore.h; sourceTree = "<group>"; };
 		2775697A1C98101900DE03CE /* ZYXImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXImageStore.m; sourceTree = "<group>"; };
 		27793E7A1C95C71000AD05AE /* ZYXDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXDetailViewController.h; sourceTree = "<group>"; };
@@ -67,8 +80,6 @@
 		27B903721C84ABE10023B098 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27B9037E1C84AC5A0023B098 /* ZYXItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXItemsViewController.h; sourceTree = "<group>"; };
 		27B9037F1C84AC5A0023B098 /* ZYXItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXItemsViewController.m; sourceTree = "<group>"; };
-		27B903811C84AFD40023B098 /* ZYXItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXItem.h; sourceTree = "<group>"; };
-		27B903821C84AFD40023B098 /* ZYXItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXItem.m; sourceTree = "<group>"; };
 		27B903841C84B2A30023B098 /* ZYXItemStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYXItemStore.h; sourceTree = "<group>"; };
 		27B903851C84B2A30023B098 /* ZYXItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYXItemStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,8 +132,6 @@
 		27B9034A1C84ABE10023B098 /* ZYXHomepwner */ = {
 			isa = PBXGroup;
 			children = (
-				27B903811C84AFD40023B098 /* ZYXItem.h */,
-				27B903821C84AFD40023B098 /* ZYXItem.m */,
 				27B903841C84B2A30023B098 /* ZYXItemStore.h */,
 				27B903851C84B2A30023B098 /* ZYXItemStore.m */,
 				27B9037E1C84AC5A0023B098 /* ZYXItemsViewController.h */,
@@ -141,8 +150,17 @@
 				2708EA991CB683F9005C5EE2 /* ZYXItemCell.h */,
 				2708EA9A1CB683F9005C5EE2 /* ZYXItemCell.m */,
 				2708EA9C1CB6842B005C5EE2 /* ZYXItemCell.xib */,
+				273EC51C1CBDF47D00B7B2FF /* Homepwner.xcdatamodeld */,
+				273EC5221CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.h */,
+				273EC5231CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.m */,
+				273EC5241CBDF8C000B7B2FF /* ZYXItem.h */,
+				273EC5251CBDF8C000B7B2FF /* ZYXItem.m */,
 				273BCE681CB7505400653589 /* ZYXImageViewController.h */,
 				273BCE691CB7505400653589 /* ZYXImageViewController.m */,
+				273EC51F1CBDF58100B7B2FF /* ZYXImageTransformer.h */,
+				273EC5201CBDF58100B7B2FF /* ZYXImageTransformer.m */,
+				273EC5281CBE36BA00B7B2FF /* ZYXAssetTypeViewController.h */,
+				273EC5291CBE36BA00B7B2FF /* ZYXAssetTypeViewController.m */,
 			);
 			path = ZYXHomepwner;
 			sourceTree = "<group>";
@@ -309,11 +327,15 @@
 				27B903501C84ABE10023B098 /* AppDelegate.m in Sources */,
 				27B9034D1C84ABE10023B098 /* main.m in Sources */,
 				2708EA9B1CB683F9005C5EE2 /* ZYXItemCell.m in Sources */,
-				27B903831C84AFD40023B098 /* ZYXItem.m in Sources */,
 				27B903801C84AC5A0023B098 /* ZYXItemsViewController.m in Sources */,
+				273EC52A1CBE36BA00B7B2FF /* ZYXAssetTypeViewController.m in Sources */,
 				2775697B1C98101900DE03CE /* ZYXImageStore.m in Sources */,
+				273EC5271CBDF8C000B7B2FF /* ZYXItem.m in Sources */,
 				27B903861C84B2A30023B098 /* ZYXItemStore.m in Sources */,
 				27793E7D1C95C71000AD05AE /* ZYXDetailViewController.m in Sources */,
+				273EC5211CBDF58100B7B2FF /* ZYXImageTransformer.m in Sources */,
+				273EC5261CBDF8C000B7B2FF /* ZYXItem+CoreDataProperties.m in Sources */,
+				273EC51E1CBDF47D00B7B2FF /* Homepwner.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +576,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		273EC51C1CBDF47D00B7B2FF /* Homepwner.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				273EC51D1CBDF47D00B7B2FF /* Homepwner.xcdatamodel */,
+			);
+			currentVersion = 273EC51D1CBDF47D00B7B2FF /* Homepwner.xcdatamodel */;
+			path = Homepwner.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 27B903401C84ABE10023B098 /* Project object */;
 }

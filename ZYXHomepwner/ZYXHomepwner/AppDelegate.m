@@ -16,15 +16,24 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    ZYXItemsViewController *itemsViewController = [[ZYXItemsViewController alloc]
-                                                   init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:itemsViewController];
-    self.window.rootViewController = nav;
-    self.window.backgroundColor = [UIColor whiteColor];
+    if (!self.window.rootViewController)
+    {
+        ZYXItemsViewController *itemsViewController = [[ZYXItemsViewController alloc]
+                                                       init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:itemsViewController];
+        nav.restorationIdentifier = NSStringFromClass([nav class]);
+        self.window.rootViewController = nav;
+    }
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -60,6 +69,29 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (UIViewController *)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    UIViewController *vc = [[UINavigationController alloc] init];
+    vc.restorationIdentifier = [identifierComponents lastObject];
+    
+    if ([identifierComponents count] == 1)
+    {
+        self.window.rootViewController = vc;
+    }
+    
+    return vc;
 }
 
 @end

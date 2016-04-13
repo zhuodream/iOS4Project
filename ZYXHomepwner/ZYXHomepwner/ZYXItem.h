@@ -1,33 +1,25 @@
 //
 //  ZYXItem.h
-//  ZYXRandomItems
+//  ZYXHomepwner
 //
-//  Created by 卓酉鑫 on 16/2/20.
+//  Created by 卓酉鑫 on 16/4/13.
 //  Copyright © 2016年 卓酉鑫. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 
-@interface ZYXItem : NSObject <NSCoding>
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, copy) NSString *itemName;
-@property (nonatomic, copy) NSString *serialNumber;
-@property (nonatomic, assign) int valueInDollars;
-@property (nonatomic, strong, readonly) NSDate *dateCreated;
-@property (nonatomic, copy) NSString *itemKey;
-@property (nonatomic, strong) UIImage *thumbnail;
+@interface ZYXItem : NSManagedObject
 
-//ZYXItem的指定初始化方法
-- (instancetype)initWithItemName:(NSString *)name valueInDollars:(int)value serialNmuber:(NSString *)sNumber;
-- (instancetype)initWithItemName:(NSString *)name;
+// Insert code here to declare functionality of your managed object subclass
+
 - (void)setThumbnailFromImage:(UIImage *)image;
 
-//中级练习
-- (instancetype)initWithItemName:(NSString *)name serialNum:(NSString *)serialNum;
-
-+ (instancetype)randomItem;
-
-
-
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "ZYXItem+CoreDataProperties.h"

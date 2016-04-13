@@ -14,7 +14,7 @@
 #import "ZYXImageStore.h"
 #import "ZYXImageViewController.h"
 
-@interface ZYXItemsViewController () <UIPopoverControllerDelegate>
+@interface ZYXItemsViewController () <UIPopoverControllerDelegate, UIViewControllerRestoration, UIDataSourceModelAssociation>
 
 @property (nonatomic, strong) UIPopoverController *imagePopover;
 
@@ -22,14 +22,14 @@
 
 @implementation ZYXItemsViewController
 
-
-
 - (instancetype)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
         self.navigationItem.title = @"Homepwner";
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
         self.navigationItem.rightBarButtonItem = bbi;
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -60,6 +60,7 @@
     [super viewDidLoad];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ZYXItemCell" bundle:nil] forCellReuseIdentifier:@"ZYXItemCell"];
+    self.tableView.restorationIdentifier = @"ZYXItemsViewControllerTableView";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -172,6 +173,7 @@
         [self.tableView reloadData];
     };
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navController.restorationIdentifier = NSStringFromClass([navController class]);
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -203,4 +205,55 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - UIViewControllerRestoration
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    return [[self alloc] init];
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeBool:self.isEditing forKey:@"TableViewIsEditing"];
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    self.editing = [coder decodeBoolForKey:@"TableViewIsEditing"];
+    [super decodeRestorableStateWithCoder:coder];
+}
+
+- (NSString *)modelIdentifierForElementAtIndexPath:(NSIndexPath *)idx inView:(UIView *)view
+{
+    NSLog(@"开启回复");
+    NSString *identifier = nil;
+    if (idx && view)
+    {
+        ZYXItem *item = [[ZYXItemStore sharedStore] allItems][idx.row];
+        identifier = item.itemKey;
+    }
+    
+    return identifier;
+}
+
+- (NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view
+{
+    NSIndexPath *indexPath = nil;
+    
+    if (identifier && view)
+    {
+        NSArray *items = [[ZYXItemStore sharedStore] allItems];
+        for (ZYXItem *item in items)
+        {
+            if ([identifier isEqualToString:item.itemKey])
+            {
+                NSInteger row = [items indexOfObjectIdenticalTo:item];
+                indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                break;
+            }
+        }
+    }
+    NSLog(@"indexPath = %@", indexPath);
+    return indexPath;
+}
 @end

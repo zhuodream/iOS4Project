@@ -10,8 +10,9 @@
 #import "ZYXItem.h"
 #import "ZYXImageStore.h"
 #import "ZYXItemStore.h"
+#import "ZYXAssetTypeViewController.h"
 
-@interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate>
+@interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate, UIViewControllerRestoration>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *serialTextField;
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *assetTypeButton;
 
 @end
 
@@ -47,6 +49,8 @@
     
     if (self)
     {
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
         if (isNew)
         {
             UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(save:)];
@@ -135,6 +139,13 @@
     
     UIImage *imageToDisplay = [[ZYXImageStore sharedStore] imageForKey:itemKey];
     self.imageView.image = imageToDisplay;
+    
+    NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
+    if (!typeLabel)
+    {
+        typeLabel = @"None";
+    }
+    self.assetTypeButton.title = [NSString stringWithFormat:@"Type:%@", typeLabel];
     
     [self updateFonts];
 }
@@ -304,6 +315,54 @@
     self.nameTextField.font = font;
     self.serialTextField.font = font;
     self.valueTextField.font = font;
+}
+- (IBAction)showAssetTypePicker:(id)sender
+{
+    [self.view endEditing:YES];
+    ZYXAssetTypeViewController *avc = [[ZYXAssetTypeViewController alloc] init];
+    avc.item = self.item;
+    
+    [self.navigationController pushViewController:avc animated:YES];
+}
+
+#pragma mark - UIViewControllerRestoration
+
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    BOOL isNew = NO;
+    if ([identifierComponents count] == 3)
+    {
+        isNew = YES;
+    }
+    
+    return [[self alloc] initForNewItem:isNew];
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.item.itemKey forKey:@"item.itemKey"];
+    
+    self.item.itemName = self.nameTextField.text;
+    self.item.serialNumber = self.serialTextField.text;
+    self.item.valueInDollars = [self.valueLabel.text intValue];
+    [[ZYXItemStore sharedStore] saveChanges];
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    NSString *itemKey = [coder decodeObjectForKey:@"item.itemKey"];
+    
+    for (ZYXItem *item in [[ZYXItemStore sharedStore] allItems])
+    {
+        if ([itemKey isEqualToString:item.itemKey])
+        {
+            self.item = item;
+            break;
+        }
+    }
+    
+    [super decodeRestorableStateWithCoder:coder];
 }
 
 @end
