@@ -14,7 +14,12 @@
 
 - (instancetype)init
 {
-    return [super initWithStyle:UITableViewStylePlain];
+    self = [super initWithStyle:UITableViewStylePlain];
+    if (self)
+    {
+        self.navigationItem.title = NSLocalizedString(@"Asset Type", @"ZYXAssetTypeViewController Title");
+    }
+    return self;
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style

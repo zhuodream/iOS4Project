@@ -27,7 +27,7 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
-        self.navigationItem.title = @"Homepwner";
+        self.navigationItem.title = NSLocalizedString(@"Homepwner", @"Name of application");
         self.restorationIdentifier = NSStringFromClass([self class]);
         self.restorationClass = [self class];
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
@@ -35,6 +35,7 @@
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewForDynamicTypeSize) name:UIContentSizeCategoryDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localeChanged:) name:NSCurrentLocaleDidChangeNotification object:nil];
     }
     return self;
 }
@@ -83,7 +84,14 @@
     
     cell.nameLabel.text = item.itemName;
     cell.serialNumberLabel.text = item.serialNumber;
-    cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
+    
+    static NSNumberFormatter *currencyFormatter = nil;
+    if (currencyFormatter == nil)
+    {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        currencyFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    }
+    cell.valueLabel.text = [currencyFormatter stringFromNumber:@(item.valueInDollars)];
     cell.thumbnailView.image = item.thumbnail;
     
     __weak typeof(cell) weakcell = cell;
@@ -202,6 +210,11 @@
     NSString *userSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
     NSNumber *cellHeight = cellHeightDictionary[userSize];
     [self.tableView setRowHeight:cellHeight.floatValue];
+    [self.tableView reloadData];
+}
+
+- (void)localeChanged:(NSNotification *)note
+{
     [self.tableView reloadData];
 }
 

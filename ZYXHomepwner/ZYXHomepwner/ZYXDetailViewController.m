@@ -11,6 +11,7 @@
 #import "ZYXImageStore.h"
 #import "ZYXItemStore.h"
 #import "ZYXAssetTypeViewController.h"
+#import "AppDelegate.h"
 
 @interface ZYXDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate, UIPopoverPresentationControllerDelegate, UIViewControllerRestoration>
 
@@ -121,6 +122,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    UIInterfaceOrientation io = [[UIApplication sharedApplication]  statusBarOrientation];
+    [self prepareViewsForOrientation:io];
+
     self.nameTextField.text = self.item.itemName;
     self.serialTextField.text = self.item.serialNumber;
     self.valueTextField.text = [NSString stringWithFormat:@"%d", self.item.valueInDollars];
@@ -136,16 +141,23 @@
     self.dateLabel.text = [dateFormatter stringFromDate:[self.item dateCreated]];
     
     NSString *itemKey = self.item.itemKey;
-    
-    UIImage *imageToDisplay = [[ZYXImageStore sharedStore] imageForKey:itemKey];
-    self.imageView.image = imageToDisplay;
+    if (itemKey)
+    {
+        UIImage *imageToDisplay = [[ZYXImageStore sharedStore] imageForKey:itemKey];
+        self.imageView.image = imageToDisplay;
+
+    }
+    else
+    {
+        self.imageView.image = nil;
+    }
     
     NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
     if (!typeLabel)
     {
-        typeLabel = @"None";
+        typeLabel = NSLocalizedString(@"None", @"Type label None");
     }
-    self.assetTypeButton.title = [NSString stringWithFormat:@"Type:%@", typeLabel];
+    self.assetTypeButton.title = [NSString stringWithFormat:NSLocalizedString(@"Type: %@", @"Asset type the button"), typeLabel];
     
     [self updateFonts];
 }
@@ -154,13 +166,19 @@
 {
     [super viewWillDisappear:animated];
     
-    UIInterfaceOrientation io = [[UIApplication sharedApplication]  statusBarOrientation];
-    [self prepareViewsForOrientation:io];
     [self.view endEditing:YES];
     
     self.item.itemName = self.nameTextField.text;
     self.item.serialNumber = self.serialTextField.text;
-    self.item.valueInDollars = [self.valueTextField.text intValue];
+    int newValue = [self.valueTextField.text intValue];
+    if (newValue != self.item.valueInDollars)
+    {
+        
+        self.item.valueInDollars = newValue;
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setInteger:newValue forKey:ZYXNextItemValuePrefsKey];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -344,7 +362,7 @@
     
     self.item.itemName = self.nameTextField.text;
     self.item.serialNumber = self.serialTextField.text;
-    self.item.valueInDollars = [self.valueLabel.text intValue];
+    self.item.valueInDollars = [self.valueTextField.text intValue];
     [[ZYXItemStore sharedStore] saveChanges];
     [super encodeRestorableStateWithCoder:coder];
 }

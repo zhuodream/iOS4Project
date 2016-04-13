@@ -10,11 +10,22 @@
 #import "ZYXItemsViewController.h"
 #import "ZYXItemStore.h"
 
+NSString *const ZYXNextItemValuePrefsKey = @"NextItemValue";
+NSString *const ZYXNextItemNamePrefsKey = @"NextItemName";
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+
++ (void)initialize
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *factorySetting = @{ ZYXNextItemValuePrefsKey : @75,
+                                      ZYXNextItemNamePrefsKey : @"Coffe Cup"};
+    [defaults registerDefaults:factorySetting];
+}
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

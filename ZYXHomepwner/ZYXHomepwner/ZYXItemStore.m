@@ -9,6 +9,8 @@
 #import "ZYXItemStore.h"
 #import "ZYXItem.h"
 #import "ZYXImageStore.h"
+#import "AppDelegate.h"
+
 @import CoreData;
 
 @interface ZYXItemStore ()
@@ -104,6 +106,12 @@
     ZYXItem *item = [NSEntityDescription insertNewObjectForEntityForName:@"ZYXItem" inManagedObjectContext:self.context];
     NSLog(@"item ============== %@", item);
     item.orderingValue = order;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    item.valueInDollars = (int)[defaults integerForKey:ZYXNextItemValuePrefsKey];
+    item.itemName = [defaults objectForKey:ZYXNextItemNamePrefsKey];
+    
+    NSLog(@"defaults = %@", [defaults dictionaryRepresentation]);
     [self.privateItems addObject:item];
     
     return item;
